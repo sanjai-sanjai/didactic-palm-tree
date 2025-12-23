@@ -783,24 +783,20 @@ export default function FinanceSubjectPage() {
             })}
           </div>
         </div>
+
+        {/* Game Intro Modal */}
+        {selectedGame && (
+          <GameIntroModal
+            isOpen={showIntro}
+            config={{
+              ...selectedGame.introConfig,
+              gameIcon: selectedGame.icon,
+            }}
+            onStartGame={handleStartGame}
+            onGoBack={handleGoBack}
+          />
+        )}
       </AppLayout>
     );
   }
-
-  {/* Game Intro Modal */}
-  return (
-    <>
-      {selectedGame && (
-        <GameIntroModal
-          isOpen={showIntro}
-          config={{
-            ...selectedGame.introConfig,
-            gameIcon: selectedGame.icon,
-          }}
-          onStartGame={handleStartGame}
-          onGoBack={handleGoBack}
-        />
-      )}
-    </>
-  );
 }
