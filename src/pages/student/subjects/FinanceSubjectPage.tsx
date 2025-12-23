@@ -320,7 +320,7 @@ const passiveLearningChapters: PassiveLearningChapter[] = [
   { chapter: 3, title: "Banking Basics", duration: "6 min" }
 ];
 
-type LearningMode = "landing" | "active" | "passive" | "gamified";
+type LearningMode = "active" | "passive" | "gamified";
 
 export default function FinanceSubjectPage() {
   const [learningMode, setLearningMode] = useState<LearningMode>("active");
