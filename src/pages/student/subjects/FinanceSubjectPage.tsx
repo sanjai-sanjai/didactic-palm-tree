@@ -332,12 +332,10 @@ export default function FinanceSubjectPage() {
   const [completedChapters, setCompletedChapters] = useState<Set<number>>(new Set());
   const totalProgress = 65;
 
-  // Scroll to top when chapter is selected
+  // Scroll to top when chapter is selected, learning mode changes, or page mounts
   useEffect(() => {
-    if (selectedChapter) {
-      window.scrollTo(0, 0);
-    }
-  }, [selectedChapter]);
+    window.scrollTo(0, 0);
+  }, [learningMode, selectedChapter]);
 
   const handlePlayGame = (game: GameCard) => {
     setSelectedGame(game);
