@@ -6,27 +6,31 @@ import { AnimatedProgress } from "@/components/ui/animated-progress";
 import { GameBadge } from "@/components/ui/game-badge";
 import { GameIntroModal, GameContainer } from "@/components/games";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Wallet, 
-  Play, 
-  Star, 
+import {
+  Wallet,
+  Play,
+  Star,
   Trophy,
   Zap,
   ChevronRight,
   Target,
   BookOpen,
-  Gamepad2
+  Gamepad2,
+  Home
 } from "lucide-react";
 import { useState } from "react";
 
 import {
-  PocketMoneyManager,
-  SmartShopperChallenge,
-  SavingsGrower,
-  BankingBasicsSimulator,
-  PriceCompareMaster,
-  MiniBusinessTycoon,
-  DigitalMoneyExplorer,
+  RealLifeBudgetSurvival,
+  MarketPriceNegotiator,
+  SavingsTree,
+  BankInterestSimulator,
+  MicroBusinessBuilder,
+  DigitalMoneyChoices,
+  MoneyFlowVisualizer,
+  GuidedSorter,
+  TimelineComparison,
+  InterestStory,
 } from "@/components/games";
 
 interface GameCard {
@@ -53,250 +57,250 @@ interface GameCard {
 
 const financeGames: GameCard[] = [
   {
-    id: "pocket-money",
-    name: "Pocket Money Manager",
-    description: "Learn budgeting and expense control",
-    icon: Wallet,
-    xp: 150,
-    coins: 50,
-    difficulty: "easy",
+    id: "budget-survival",
+    name: "Real Life Budget Survival",
+    description: "Manage ₹3000 monthly salary with smart decisions",
+    icon: Home,
+    xp: 200,
+    coins: 60,
+    difficulty: "hard",
     status: "available",
-    route: "/student/finance/game/pocket-money",
-    component: PocketMoneyManager,
+    route: "/student/finance/game/budget-survival",
+    component: RealLifeBudgetSurvival,
     instructions:
-      "You have ₹500 for the month. Every day, you'll see mandatory (must pay) and optional (nice to have) expenses. Decide which ones to pay. Your goal is to finish the month with savings! Remember: necessities come first.",
+      "You get ₹3,000 salary monthly. Fixed expenses auto-deduct (rent, food, school). Random events appear (phone repair, gifts, medical). Choose to pay, delay, or skip. Win by ending with ₹500+ savings!",
     conceptLearned:
-      "Budgeting is about managing your money wisely. Spending on needs keeps you healthy and safe. Optional wants can wait. Small savings every day add up!",
+      "Budgeting means prioritizing needs over wants. Every expense decision has consequences. Build stress by delaying payments, save money by skipping optional items.",
     introConfig: {
-      conceptName: "Pocket Money Manager",
-      concept: "Budgeting & Expense Control",
+      conceptName: "Real Life Budget Survival",
+      concept: "Monthly Budgeting & Trade-offs",
       whatYouLearn: [
-        "Manage ₹500 throughout a month",
-        "Prioritize needs over wants and watch your savings grow",
+        "Manage a real monthly budget",
+        "Understand fixed vs random expenses",
+        "Make smart trade-off decisions",
       ],
       howToPlay: [
-        "Each day, you'll see mandatory expenses (like travel) and optional ones (like snacks)",
-        "Drag money from your wallet to pay for items",
-        "Unspent money goes to your savings jar",
-        "Finish day 30 with money left = you win!",
+        "Receive ₹3,000 at month start",
+        "Pay rent (₹1500), food (₹800), school (₹500)",
+        "Random events appear during the month",
+        "Choose: Pay now, delay payment, or skip",
+        "End month with ₹500+ to win!",
       ],
       outcome:
-        "You'll understand that smart spending leads to real savings—the foundation of financial health!",
+        "You'll master real-world budgeting and understand that smart choices = financial stability!",
     },
   },
   {
-    id: "smart-shopper",
-    name: "Smart Shopper Challenge",
-    description: "Discover needs vs wants",
+    id: "price-negotiator",
+    name: "Market Price Negotiator",
+    description: "Compare 3 sellers and pick the best value",
     icon: Target,
     xp: 150,
     coins: 50,
-    difficulty: "easy",
+    difficulty: "medium",
     status: "available",
-    route: "/student/finance/game/smart-shopper",
-    component: SmartShopperChallenge,
+    route: "/student/finance/game/price-negotiator",
+    component: MarketPriceNegotiator,
     instructions:
-      "Visit three different market scenes with different items to buy. Items are labeled as either NEEDS (green) or WANTS (yellow). Select items wisely and checkout. You'll see how many needs vs wants you picked and get feedback on your choices.",
+      "Compare prices from 3 different sellers. Calculate price per unit, not just total price. Watch out for hidden costs! Pick the smartest deal.",
     conceptLearned:
-      "Needs are things you must have (food, school supplies). Wants are extras you'd like (toys, games). Spending money on needs first is smart because they keep you healthy and help you learn.",
+      "Cheapest ≠ Best value. Always calculate price per unit. Sometimes premium quality is worth the extra cost. Smart shopping saves real money!",
     introConfig: {
-      conceptName: "Smart Shopper Challenge",
-      concept: "Needs vs Wants",
+      conceptName: "Market Price Negotiator",
+      concept: "Value vs Price",
       whatYouLearn: [
-        "Identify what you truly NEED vs what you WANT",
-        "Balance your budget by choosing wisely in a market",
+        "Calculate price per unit",
+        "Identify hidden costs",
+        "Choose best value deals",
       ],
       howToPlay: [
-        "Visit the market and see items with prices",
-        "Drag items into your basket to select them",
-        "Green items = NEEDS, Yellow items = WANTS",
-        "Checkout and see your wise (or not so wise!) choices",
+        "See 3 shopping scenarios",
+        "Each has 3 sellers with different prices/quantities",
+        "Calculate ₹/unit for each option",
+        "Pick the best value!",
       ],
       outcome:
-        "You'll master the art of smart shopping—knowing the difference between needs and wants saves money!",
+        "You'll become a smart shopper who finds real value, not just low prices!",
     },
   },
   {
-    id: "savings-grower",
-    name: "Savings Grower",
-    description: "Build consistent saving habits",
+    id: "savings-tree",
+    name: "Savings Tree",
+    description: "Grow a tree through 30 days of consistent saving",
     icon: Zap,
     xp: 150,
     coins: 50,
     difficulty: "medium",
     status: "available",
-    route: "/student/finance/game/savings-grower",
-    component: SavingsGrower,
+    route: "/student/finance/game/savings-tree",
+    component: SavingsTree,
     instructions:
-      "You have a plant that grows when you save money consistently. Every day, decide: save ₹100 or skip. Save for 15 consecutive days to win! But if you skip days, your plant wilts. The key: consistency beats big one-time savings.",
+      "Save ₹100 every day for 30 consecutive days. Miss even one day and your tree wilts! Watch how consistency beats big one-time savings.",
     conceptLearned:
-      "Small, regular savings are more powerful than big, rare ones. Saving ₹100 every day for 15 days builds ₹1500 and stronger money habits. Missing days sets you back.",
+      "Discipline beats intensity. ₹100 daily for 30 days = ₹3,000. One ₹3,000 deposit without follow-up = nothing gained. Small daily habits create real wealth!",
     introConfig: {
-      conceptName: "Savings Grower",
-      concept: "Consistency > Amount",
+      conceptName: "Savings Tree",
+      concept: "Consistency Over Amount",
       whatYouLearn: [
-        "Save a little bit every day for 15 days straight",
-        "Watch your plant grow with regular deposits",
+        "Save ₹100 daily for 30 days",
+        "Build a healthy savings tree",
+        "Learn discipline pays off",
       ],
       howToPlay: [
-        "Each day, choose to save ₹100 or skip",
-        "Saving adds water to grow your plant",
-        "Missing a day causes your plant to wilt",
-        "Reach 15 consecutive saving days to win!",
+        "Each day, choose: Save ₹100 or Skip",
+        "Save daily = tree grows, leaves appear",
+        "Skip a day = tree wilts, leaves fall",
+        "Get 30 consecutive saves to win!",
       ],
       outcome:
-        "You'll learn that showing up every day—even with small amounts—creates real wealth and strong habits!",
+        "You'll understand that small daily actions compound into real wealth!",
     },
   },
   {
-    id: "banking-basics",
-    name: "Banking Basics Simulator",
-    description: "Explore how banks grow money",
+    id: "interest-simulator",
+    name: "Bank Interest Simulator",
+    description: "Deposit money and watch interest grow it over time",
     icon: Wallet,
     xp: 200,
     coins: 60,
     difficulty: "medium",
     status: "available",
-    route: "/student/finance/game/banking-basics",
-    component: BankingBasicsSimulator,
+    route: "/student/finance/game/interest-simulator",
+    component: BankInterestSimulator,
     instructions:
-      "Start a bank account and manage it for a year. Make deposits, watch your money grow through interest, and see how withdrawals stop your growth. You'll earn about 5% annual interest, so bigger deposits = bigger returns!",
+      "Deposit money into your bank account. Use the time slider to see your money grow through 5% annual interest. Withdraw at any time!",
     conceptLearned:
-      "Banks pay you interest on your savings! The more you save and the longer you leave it, the more it grows. Early withdrawals stop the growth. This is how long-term wealth is built.",
+      "Banks pay you for saving (interest). More time + more money = exponential growth. This is how wealth compounds. Start early to maximize growth!",
     introConfig: {
-      conceptName: "Banking Basics Simulator",
-      concept: "How Banks Grow Money",
+      conceptName: "Bank Interest Simulator",
+      concept: "Time Value of Money",
       whatYouLearn: [
-        "Deposit money and watch it grow through interest",
-        "Keep money in longer = bigger returns",
+        "Deposit multiple amounts",
+        "Watch interest multiply your money",
+        "Understand compound growth",
       ],
       howToPlay: [
-        "Start by making your first deposit",
-        "Each month, your money grows by ~0.42% in interest",
-        "Deposit more to earn more or withdraw to spend",
-        "Run the bank for 12 months to see final growth",
+        "Make deposits into your bank account",
+        "Slide time from month 0 to 24",
+        "Watch interest grow your balance",
+        "Withdraw anytime to see your returns!",
       ],
       outcome:
-        "You'll understand that banks reward savers with interest—the earlier you start, the more you grow!",
+        "You'll see how patience + banks = wealth creation! Start saving today!",
     },
   },
   {
-    id: "price-compare",
-    name: "Price Compare Master",
-    description: "Find the best value, not just lowest price",
-    icon: Target,
-    xp: 150,
-    coins: 50,
-    difficulty: "medium",
-    status: "available",
-    route: "/student/finance/game/price-compare",
-    component: PriceCompareMaster,
-    instructions:
-      "Three shops sell the same product at different prices and quantities. Pick the best value! Remember: lowest price isn't always best value. Calculate price per unit to make smart choices. Correct answers earn points!",
-    conceptLearned:
-      "Best value = lowest price PER UNIT, not the lowest total price. ₹100 for 2 liters (₹50/L) is better than ₹60 for 1 liter (₹60/L). Always do the math!",
-    introConfig: {
-      conceptName: "Price Compare Master",
-      concept: "Best Value ≠ Lowest Price",
-      whatYouLearn: [
-        "Calculate price per unit to find the real best deal",
-        "Bigger packs often have better per-unit pricing",
-      ],
-      howToPlay: [
-        "Three shops sell the same product",
-        "Each has different price and quantity",
-        "Calculate the price per unit for each",
-        "Pick the option with the lowest per-unit cost",
-      ],
-      outcome:
-        "You'll become a smart shopper who saves money by comparing value, not just price!",
-    },
-  },
-  {
-    id: "business-tycoon",
-    name: "Mini Business Tycoon",
-    description: "Learn profit and loss management",
+    id: "business-builder",
+    name: "Micro Business Builder",
+    description: "Run a juice stall: buy inventory, set prices, maximize profit",
     icon: Trophy,
     xp: 200,
     coins: 60,
     difficulty: "hard",
     status: "available",
-    route: "/student/finance/game/business-tycoon",
-    component: MiniBusinessTycoon,
+    route: "/student/finance/game/business-builder",
+    component: MicroBusinessBuilder,
     instructions:
-      "Run a lemonade stall for 7 days. Buy materials (₹30 per glass), set your selling price, and serve customers. Customers buy more at lower prices but with less profit per item. Higher prices = more profit per item but fewer customers. Find the balance!",
+      "You have ₹1,000. Buy juice bottles (₹30 each). Set your selling price. Customers buy more at low prices but with low profit. Find the perfect price for 7 days!",
     conceptLearned:
-      "Profit = Revenue - Cost. Lower prices attract more customers (more volume), higher prices earn more per item. The best business owners find the sweet spot that maximizes total profit, not just price or volume.",
+      "Profit = Revenue - Cost. Low price = high volume, low profit per item. High price = fewer sales, high profit per item. Smart businesses find the sweet spot!",
     introConfig: {
-      conceptName: "Mini Business Tycoon",
-      concept: "Profit & Loss Management",
+      conceptName: "Micro Business Builder",
+      concept: "Profit & Loss Logic",
       whatYouLearn: [
-        "Buy materials and create inventory",
-        "Set competitive prices and manage profit margins",
+        "Buy inventory with budget",
+        "Set competitive prices",
+        "Manage profit margins",
       ],
       howToPlay: [
-        "Buy materials (each item costs ₹30 to make)",
-        "Set a selling price (higher = more profit per item)",
-        "Each day, customers come to buy based on your price",
-        "Run for 7 days and see your total profit",
+        "Start with ₹1,000 cash",
+        "Buy juice bottles at ₹30 each",
+        "Set your selling price",
+        "Run for 7 days, see profits grow!",
       ],
       outcome:
-        "You'll learn that business success is about balancing price, volume, and profit. Great entrepreneurs think strategically!",
+        "You'll learn that profit comes from smart pricing strategy, not just volume!",
     },
   },
   {
-    id: "digital-money",
-    name: "Digital Money Explorer",
-    description: "Compare cash vs digital payments",
+    id: "money-choices",
+    name: "Digital Money Choices",
+    description: "Choose the right payment method for each situation",
     icon: Wallet,
     xp: 150,
     coins: 50,
-    difficulty: "medium",
+    difficulty: "easy",
     status: "available",
-    route: "/student/finance/game/digital-money",
-    component: DigitalMoneyExplorer,
+    route: "/student/finance/game/money-choices",
+    component: DigitalMoneyChoices,
     instructions:
-      "Face 4 real-world shopping scenarios (street vendor, supermarket, etc.). For each, choose between cash, debit card, or mobile payment. You'll see how each method works and learn when to use each one. Different situations call for different payment methods!",
+      "Face 5 real-world scenarios. Choose: Cash, UPI, or Card? Each has pros and cons. Pick the right method for each situation!",
     conceptLearned:
-      "Cash is best for small purchases (immediate, no fees). Cards are best for large purchases (safe, tracked). Mobile payments are fastest for medium purchases. Understanding pros and cons helps you choose wisely!",
+      "Cash = instant, fee-free, risky. UPI = fast, secure, online-only. Card = traceable, safe, possible fees. Different situations need different tools!",
     introConfig: {
-      conceptName: "Digital Money Explorer",
-      concept: "Cash vs Digital Payments",
+      conceptName: "Digital Money Choices",
+      concept: "Payment Methods Wisdom",
       whatYouLearn: [
-        "Understand when to use cash, cards, or mobile payments",
-        "Learn the pros and cons of each method",
+        "When to use cash vs digital",
+        "Pros and cons of each method",
+        "Safety in transactions",
       ],
       howToPlay: [
-        "Read a shopping scenario",
-        "Choose your payment method: cash, card, or mobile",
-        "See how the transaction processes",
-        "Learn the best practice for that situation",
+        "Read 5 shopping scenarios",
+        "Choose: Cash (💵), UPI (📱), or Card (💳)",
+        "Get feedback on your choice",
+        "Learn the right times for each!",
       ],
       outcome:
-        "You'll be a payment expert—knowing exactly when and how to pay makes transactions smooth and safe!",
+        "You'll be a payment expert who chooses the smart option every time!",
     },
   },
 ];
 
-const activeLearningLevels = [
+interface ActiveLearningModule {
+  id: string;
+  name: string;
+  description: string;
+  icon: React.ElementType;
+  component: React.ComponentType;
+  xp: number;
+  coins: number;
+}
+
+const activeLearningModules: ActiveLearningModule[] = [
   {
-    level: 1,
-    name: "Earning & Spending",
-    description: "Understand income and expenses",
+    id: "money-flow",
+    name: "Money Flow Explorer",
+    description: "Understand where your money goes",
+    icon: Wallet,
+    component: MoneyFlowVisualizer,
     xp: 100,
     coins: 30
   },
   {
-    level: 2,
-    name: "Saving Strategies",
-    description: "Learn effective saving methods",
+    id: "need-vs-want",
+    name: "Need vs Want Sorter",
+    description: "Learn to distinguish needs from wants",
+    icon: Target,
+    component: GuidedSorter,
     xp: 150,
     coins: 40
   },
   {
-    level: 3,
-    name: "Banking Essentials",
-    description: "Explore how banks work",
+    id: "timeline",
+    name: "Saving vs Spending",
+    description: "See 30 days of compound decisions",
+    icon: Zap,
+    component: TimelineComparison,
+    xp: 150,
+    coins: 40
+  },
+  {
+    id: "interest-story",
+    name: "How Banks Work",
+    description: "Explore the power of interest",
+    icon: Wallet,
+    component: InterestStory,
     xp: 200,
     coins: 60
   }
@@ -350,6 +354,7 @@ export default function FinanceSubjectPage() {
   const [selectedGame, setSelectedGame] = useState<GameCard | null>(null);
   const [showIntro, setShowIntro] = useState(false);
   const [playingGame, setPlayingGame] = useState<GameCard | null>(null);
+  const [activeModule, setActiveModule] = useState<ActiveLearningModule | null>(null);
   const totalProgress = 65;
 
   const handlePlayGame = (game: GameCard) => {
@@ -378,6 +383,31 @@ export default function FinanceSubjectPage() {
     setPlayingGame(null);
     setSelectedGame(null);
   };
+
+  // Show active learning module view
+  if (activeModule) {
+    const ModuleComponent = activeModule.component;
+    return (
+      <AppLayout role="student" playCoins={1250} title={activeModule.name}>
+        <div className="px-4 py-6 pb-24">
+          <div className="mb-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setActiveModule(null)}
+              className="flex items-center gap-2 mb-4"
+            >
+              <ChevronRight className="h-4 w-4 transform rotate-180" />
+              Back to Active Learning
+            </Button>
+          </div>
+          <div className="w-full h-full rounded-lg border border-border bg-card overflow-hidden">
+            <ModuleComponent />
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
 
   // Show active game view
   if (playingGame) {
@@ -447,45 +477,47 @@ export default function FinanceSubjectPage() {
             <div className="mb-4">
               <h3 className="font-heading font-semibold text-foreground flex items-center gap-2">
                 <Target className="h-5 w-5 text-primary" />
-                Learning Levels
+                Interactive Modules
               </h3>
-              <p className="text-sm text-muted-foreground mt-1">Complete levels to build your skills</p>
+              <p className="text-sm text-muted-foreground mt-1">Build mental models through guided exploration</p>
             </div>
 
-            <div className="space-y-3">
-              {activeLearningLevels.map((level, index) => (
-                <Card 
-                  key={level.level}
-                  className="glass-card border border-primary/30 p-4 slide-up"
-                  style={{ animationDelay: `${100 + index * 75}ms` }}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="h-12 w-12 rounded-lg bg-primary flex items-center justify-center shrink-0">
-                      <span className="font-heading text-lg font-bold text-primary-foreground">{level.level}</span>
-                    </div>
-
-                    <div className="flex-1">
-                      <h4 className="font-heading font-semibold text-foreground mb-1">
-                        Level {level.level}: {level.name}
-                      </h4>
-                      <p className="text-sm text-muted-foreground">{level.description}</p>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="text-xs text-accent">+{level.coins} 🪙</span>
-                        <span className="text-xs text-primary">+{level.xp} XP</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {activeLearningModules.map((module, index) => {
+                const Icon = module.icon;
+                return (
+                  <Card
+                    key={module.id}
+                    className="glass-card border border-primary/30 p-4 hover:scale-105 transition-transform cursor-pointer slide-up"
+                    style={{ animationDelay: `${100 + index * 75}ms` }}
+                    onClick={() => setActiveModule(module)}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="h-12 w-12 rounded-lg bg-primary flex items-center justify-center shrink-0">
+                        <Icon className="h-6 w-6 text-primary-foreground" />
                       </div>
                     </div>
 
+                    <h4 className="font-heading font-semibold text-foreground mb-1">
+                      {module.name}
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-3">{module.description}</p>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-accent">+{module.coins} 🪙</span>
+                      <span className="text-xs text-primary">+{module.xp} XP</span>
+                    </div>
+
                     <Button
-                      variant="ghost"
+                      variant="default"
                       size="sm"
-                      className="shrink-0"
+                      className="w-full mt-3 bg-primary hover:bg-primary/90"
                     >
-                      Start
+                      Explore
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>
-                  </div>
-                </Card>
-              ))}
+                  </Card>
+                );
+              })}
             </div>
           </TabsContent>
 
