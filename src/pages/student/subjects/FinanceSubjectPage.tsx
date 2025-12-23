@@ -6,16 +6,17 @@ import { AnimatedProgress } from "@/components/ui/animated-progress";
 import { GameBadge } from "@/components/ui/game-badge";
 import { GameIntroModal, GameContainer } from "@/components/games";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Wallet, 
-  Play, 
-  Star, 
+import {
+  Wallet,
+  Play,
+  Star,
   Trophy,
   Zap,
   ChevronRight,
   Target,
   BookOpen,
-  Gamepad2
+  Gamepad2,
+  Home
 } from "lucide-react";
 import { useState } from "react";
 
