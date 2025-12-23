@@ -127,7 +127,7 @@ export default function TechnologyPage() {
             </div>
           ))}
         </div>
-      </div>
-    </SubjectLayout>
-  );
-}
+        </div>
+      </SubjectLayout>
+    );
+  }
