@@ -200,6 +200,36 @@ export default function VillagePhysicsExplorer() {
       ctx.fillText(`Distance: ${lastDistance}px`, GAME_WIDTH / 2, 100);
     }
 
+    // Friction visualization arrow while moving
+    if (currentCart.active && currentCart.vx > 0.2) {
+      const frictionArrowX = currentCart.x + CART_WIDTH / 2;
+      const frictionArrowY = CART_START_Y - 40;
+      const arrowLength = Math.abs(currentCart.vx) * 5;
+
+      // Draw friction arrow pointing backward (opposing motion)
+      ctx.strokeStyle = "#FF6B35";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(frictionArrowX, frictionArrowY);
+      ctx.lineTo(frictionArrowX - arrowLength, frictionArrowY);
+      ctx.stroke();
+
+      // Arrow head
+      ctx.beginPath();
+      ctx.moveTo(frictionArrowX - arrowLength, frictionArrowY);
+      ctx.lineTo(frictionArrowX - arrowLength + 10, frictionArrowY - 6);
+      ctx.lineTo(frictionArrowX - arrowLength + 10, frictionArrowY + 6);
+      ctx.closePath();
+      ctx.fillStyle = "#FF6B35";
+      ctx.fill();
+
+      // Friction label
+      ctx.fillStyle = "#000";
+      ctx.font = "bold 12px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("Friction", frictionArrowX - arrowLength / 2, frictionArrowY - 15);
+    }
+
     // Friction indicator
     ctx.fillStyle = "#666";
     ctx.font = "14px Arial";
