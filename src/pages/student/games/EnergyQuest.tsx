@@ -561,12 +561,12 @@ export default function EnergyQuest() {
             {/* Progress */}
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="font-semibold text-gray-800">Houses Lit</span>
-                <span className="text-gray-600">{gameState.housesLit}/{WIN_CONDITION}</span>
+                <span className="font-semibold text-foreground">Houses Lit</span>
+                <span className="text-muted-foreground">{gameState.housesLit}/{WIN_CONDITION}</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-muted-foreground/30 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-3 rounded-full transition-all duration-300"
+                  className="bg-secondary h-3 rounded-full transition-all duration-300"
                   style={{ width: `${(gameState.housesLit / WIN_CONDITION) * 100}%` }}
                 />
               </div>
