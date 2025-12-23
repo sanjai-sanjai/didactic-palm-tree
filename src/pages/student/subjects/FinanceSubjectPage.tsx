@@ -409,6 +409,31 @@ export default function FinanceSubjectPage() {
     setSelectedGame(null);
   };
 
+  // Show active learning module view
+  if (activeModule) {
+    const ModuleComponent = activeModule.component;
+    return (
+      <AppLayout role="student" playCoins={1250} title={activeModule.name}>
+        <div className="px-4 py-6 pb-24">
+          <div className="mb-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setActiveModule(null)}
+              className="flex items-center gap-2 mb-4"
+            >
+              <ChevronRight className="h-4 w-4 transform rotate-180" />
+              Back to Active Learning
+            </Button>
+          </div>
+          <div className="w-full h-full rounded-lg border border-border bg-card overflow-hidden">
+            <ModuleComponent />
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
+
   // Show active game view
   if (playingGame) {
     const GameComponent = playingGame.component;
