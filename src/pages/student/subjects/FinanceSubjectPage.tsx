@@ -433,8 +433,8 @@ export default function FinanceSubjectPage() {
           {/* Learning Mode Cards */}
           <div className="space-y-4">
             {/* Active Learning Card */}
-            <Card 
-              className="glass-card border border-primary/30 p-6 hover:scale-102 transition-transform cursor-pointer slide-up"
+            <Card
+              className="glass-card border border-primary/30 p-6 hover:scale-105 transition-transform cursor-pointer slide-up"
               onClick={() => setLearningMode("active")}
             >
               <div className="flex items-start justify-between mb-4">
