@@ -498,9 +498,17 @@ export default function FinanceSubjectPage() {
                 Back to Chapters
               </Button>
               <Button
-                className="flex-1 bg-secondary hover:bg-secondary/90"
+                onClick={handleMarkAsComplete}
+                className={`flex-1 flex items-center justify-center gap-2 ${
+                  completedChapters.has(selectedChapter.chapter)
+                    ? "bg-secondary/80 hover:bg-secondary/80"
+                    : "bg-secondary hover:bg-secondary/90"
+                }`}
               >
-                Mark as Complete
+                {completedChapters.has(selectedChapter.chapter) && (
+                  <CheckCircle2 className="h-4 w-4" />
+                )}
+                {completedChapters.has(selectedChapter.chapter) ? "Completed" : "Mark as Complete"}
               </Button>
             </div>
           </div>
