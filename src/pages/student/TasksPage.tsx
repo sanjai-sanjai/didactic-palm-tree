@@ -416,15 +416,24 @@ export default function TasksPage() {
             {displayedTasks.length === 0 ? (
               <div className="glass-card border border-border rounded-lg p-8 text-center">
                 <Award className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
-                <p className="font-medium text-foreground mb-1">No tasks available</p>
+                <p className="font-medium text-foreground mb-1">
+                  {selectedStatusFilter === "completed" && "No completed tasks yet"}
+                  {selectedStatusFilter === "active" && "No active tasks"}
+                  {selectedStatusFilter === "available" && "No available tasks"}
+                  {selectedStatusFilter === "all" && "No tasks available"}
+                </p>
                 <p className="text-sm text-muted-foreground">
-                  {selectedCategory !== "all" 
-                    ? "Try selecting a different category" 
-                    : "Check back soon or explore other categories"}
+                  {selectedStatusFilter !== "all" && selectedCategory !== "all"
+                    ? "Try selecting a different category"
+                    : selectedStatusFilter === "completed"
+                    ? "Complete tasks to earn rewards!"
+                    : selectedStatusFilter === "available"
+                    ? "Check back soon for more tasks"
+                    : "Start an available task to get going!"}
                 </p>
               </div>
             ) : (
-              [...inProgressTasks, ...availableTasks, ...completedTasks].map((userTask, index) => {
+              displayedTasks.map((userTask, index) => {
                 const taskDef = allTasks.find((t) => t.id === userTask.taskId);
                 if (!taskDef) return null;
 
