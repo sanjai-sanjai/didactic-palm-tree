@@ -313,7 +313,8 @@ export default function ReactionDetective() {
                     {/* Substance 1 */}
                     <div className="flex flex-col items-center">
                       <div className="text-6xl mb-3 transition-transform hover:scale-110">{currentReaction.emoji1}</div>
-                      <p className="text-sm font-semibold text-center">{currentReaction.substance1}</p>
+                      <p className="text-sm font-semibold text-center text-black dark:text-white">{currentReaction.substance1}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-300 font-mono mt-1">{currentReaction.substance1Formula}</p>
                     </div>
 
                     {/* Plus Sign */}
@@ -322,7 +323,8 @@ export default function ReactionDetective() {
                     {/* Substance 2 */}
                     <div className="flex flex-col items-center">
                       <div className="text-6xl mb-3 transition-transform hover:scale-110">{currentReaction.emoji2}</div>
-                      <p className="text-sm font-semibold text-center">{currentReaction.substance2}</p>
+                      <p className="text-sm font-semibold text-center text-black dark:text-white">{currentReaction.substance2}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-300 font-mono mt-1">{currentReaction.substance2Formula}</p>
                     </div>
                   </div>
 
