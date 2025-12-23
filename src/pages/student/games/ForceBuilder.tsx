@@ -355,7 +355,7 @@ export default function ForceBuilder() {
                     onClick={() => applyForce(force)}
                     disabled={isMoving || forceApplied > 0}
                     variant={forceApplied === force ? "default" : "outline"}
-                    className="w-full"
+                    className="w-full text-black"
                   >
                     Force {force}
                   </Button>
