@@ -20,13 +20,12 @@ import {
 import { useState } from "react";
 
 import {
-  PocketMoneyManager,
-  SmartShopperChallenge,
-  SavingsGrower,
-  BankingBasicsSimulator,
-  PriceCompareMaster,
-  MiniBusinessTycoon,
-  DigitalMoneyExplorer,
+  RealLifeBudgetSurvival,
+  MarketPriceNegotiator,
+  SavingsTree,
+  BankInterestSimulator,
+  MicroBusinessBuilder,
+  DigitalMoneyChoices,
   MoneyFlowVisualizer,
   GuidedSorter,
   TimelineComparison,
