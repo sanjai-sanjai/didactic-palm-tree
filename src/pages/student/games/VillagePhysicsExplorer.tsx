@@ -200,6 +200,36 @@ export default function VillagePhysicsExplorer() {
       ctx.fillText(`Distance: ${lastDistance}px`, GAME_WIDTH / 2, 100);
     }
 
+    // Friction visualization arrow while moving
+    if (currentCart.active && currentCart.vx > 0.2) {
+      const frictionArrowX = currentCart.x + CART_WIDTH / 2;
+      const frictionArrowY = CART_START_Y - 40;
+      const arrowLength = Math.abs(currentCart.vx) * 5;
+
+      // Draw friction arrow pointing backward (opposing motion)
+      ctx.strokeStyle = "#FF6B35";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(frictionArrowX, frictionArrowY);
+      ctx.lineTo(frictionArrowX - arrowLength, frictionArrowY);
+      ctx.stroke();
+
+      // Arrow head
+      ctx.beginPath();
+      ctx.moveTo(frictionArrowX - arrowLength, frictionArrowY);
+      ctx.lineTo(frictionArrowX - arrowLength + 10, frictionArrowY - 6);
+      ctx.lineTo(frictionArrowX - arrowLength + 10, frictionArrowY + 6);
+      ctx.closePath();
+      ctx.fillStyle = "#FF6B35";
+      ctx.fill();
+
+      // Friction label
+      ctx.fillStyle = "#000";
+      ctx.font = "bold 12px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("Friction", frictionArrowX - arrowLength / 2, frictionArrowY - 15);
+    }
+
     // Friction indicator
     ctx.fillStyle = "#666";
     ctx.font = "14px Arial";
@@ -229,7 +259,7 @@ export default function VillagePhysicsExplorer() {
     <div
       className={cn(
         "flex flex-col items-center justify-center transition-all duration-300",
-        isFullscreen ? "fixed inset-0 z-50 bg-black p-0" : "w-full bg-gradient-to-br from-blue-50 to-cyan-50 p-4"
+        isFullscreen ? "fixed inset-0 z-50 bg-black p-0" : "w-full bg-background p-4"
       )}
     >
       {/* Fullscreen button */}
@@ -261,7 +291,7 @@ export default function VillagePhysicsExplorer() {
 
       {/* Canvas */}
       <div className={cn(
-        "rounded-lg border-2 border-gray-300 shadow-lg bg-white overflow-hidden",
+        "rounded-lg border-2 border-border shadow-lg bg-card overflow-hidden",
         isFullscreen ? "w-screen h-screen" : "w-full max-w-4xl"
       )}>
         <canvas
@@ -274,11 +304,11 @@ export default function VillagePhysicsExplorer() {
 
       {/* Controls */}
       {!isFullscreen && (
-        <div className="mt-6 w-full max-w-4xl bg-white p-6 rounded-lg border border-gray-200">
+        <div className="mt-6 w-full max-w-4xl bg-card p-6 rounded-lg border border-border">
           <div className="space-y-6">
             {/* Surface Selection */}
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-gray-700">
+              <label className="text-sm font-semibold text-foreground">
                 Choose a Surface
               </label>
               <div className="grid grid-cols-3 gap-3">
@@ -311,12 +341,12 @@ export default function VillagePhysicsExplorer() {
 
             {/* Result Display */}
             {showResult && (
-              <div className="p-4 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-300">
+              <div className="p-4 rounded-lg bg-muted border border-border/50">
                 <div className="text-center mb-4">
-                  <div className="text-3xl font-bold text-purple-700 mb-2">
+                  <div className="text-3xl font-bold text-accent mb-2">
                     {lastDistance}px
                   </div>
-                  <div className="text-sm text-gray-700">
+                  <div className="text-sm text-foreground/80">
                     The cart rolled {lastDistance} pixels on {SURFACES[selectedSurface].name.toLowerCase()}
                   </div>
                 </div>
@@ -331,17 +361,17 @@ export default function VillagePhysicsExplorer() {
 
             {/* Comparison Table */}
             {Object.values(results).some((r) => r > 0) && (
-              <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
-                <h3 className="font-bold text-gray-800 mb-3">📊 Distances Recorded</h3>
+              <div className="p-4 rounded-lg bg-muted border border-border/50">
+                <h3 className="font-bold text-foreground mb-3">📊 Distances Recorded</h3>
                 <div className="space-y-2">
                   {Object.entries(SURFACES).map(([key, surface]) => (
                     <div key={key} className="flex justify-between items-center">
-                      <span className="text-sm font-medium">{surface.name}:</span>
+                      <span className="text-sm font-medium text-foreground">{surface.name}:</span>
                       <div className="flex items-center gap-3 flex-1 ml-4">
-                        <div className="flex-1 bg-gray-200 rounded-full h-2">
+                        <div className="flex-1 bg-muted-foreground/30 rounded-full h-2">
                           {results[key as keyof typeof SURFACES] > 0 && (
                             <div
-                              className="bg-green-500 h-2 rounded-full transition-all"
+                              className="bg-secondary h-2 rounded-full transition-all"
                               style={{
                                 width: `${Math.min((results[key as keyof typeof SURFACES] / 400) * 100, 100)}%`,
                               }}
@@ -361,7 +391,7 @@ export default function VillagePhysicsExplorer() {
             )}
 
             {/* Stats */}
-            <div className="text-sm text-gray-600 text-center">
+            <div className="text-sm text-muted-foreground text-center">
               Total Pushes: {attempts}
             </div>
           </div>
@@ -370,23 +400,23 @@ export default function VillagePhysicsExplorer() {
 
       {/* Embedded Info */}
       {!isFullscreen && (
-        <div className="mt-6 w-full max-w-4xl bg-green-50 p-6 rounded-lg border border-green-200">
+        <div className="mt-6 w-full max-w-4xl bg-card p-6 rounded-lg border border-border/50">
           <div className="space-y-4">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">📘 Concept</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">📘 Concept</h3>
+              <p className="text-sm text-foreground/80">
                 Different surfaces create different amounts of friction. Friction opposes motion and makes things slow down faster.
               </p>
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">🕹 How to Play</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">🕹 How to Play</h3>
+              <p className="text-sm text-foreground/80">
                 Select a surface, push the cart with the same force each time, and observe how far it travels. Compare distances across surfaces!
               </p>
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">🧠 What You Learn</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">🧠 What You Learn</h3>
+              <p className="text-sm text-foreground/80">
                 Mud has high friction (stops quickly). Grass is moderate. Stone has low friction (rolls farthest). Surface matters more than force!
               </p>
             </div>

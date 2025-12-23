@@ -135,6 +135,7 @@ export default function TasksPage() {
   const [showProofModal, setShowProofModal] = useState(false);
   const [showTaskDetail, setShowTaskDetail] = useState(false);
   const [activeFilter, setActiveFilter] = useState<TaskCategory | "all">("all");
+  const [selectedStatusFilter, setSelectedStatusFilter] = useState<"all" | "completed" | "active" | "available">("all");
 
   // =========================================================================
   // HANDLERS
@@ -148,6 +149,50 @@ export default function TasksPage() {
   const handleFilterChange = (category: TaskCategory | "all") => {
     setActiveFilter(category);
     filterByCategory(category);
+  };
+
+  // Get filtered tasks based on both status and category
+  const getFilteredTasksByStatus = () => {
+    let tasks: typeof userTasks = [];
+
+    switch (selectedStatusFilter) {
+      case "completed":
+        tasks = completedTasks;
+        break;
+      case "active":
+        tasks = inProgressTasks;
+        break;
+      case "available":
+        tasks = availableTasks;
+        break;
+      case "all":
+      default:
+        tasks = [...inProgressTasks, ...availableTasks, ...completedTasks];
+    }
+
+    // Further filter by category if needed
+    if (activeFilter !== "all") {
+      tasks = tasks.filter((userTask) => {
+        const taskDef = allTasks.find((t) => t.id === userTask.taskId);
+        return taskDef?.category === activeFilter;
+      });
+    }
+
+    return tasks;
+  };
+
+  const displayedTasks = getFilteredTasksByStatus();
+  const getStatusLabel = () => {
+    switch (selectedStatusFilter) {
+      case "completed":
+        return "Completed Tasks";
+      case "active":
+        return "Active Tasks";
+      case "available":
+        return "Available Tasks";
+      default:
+        return "All Tasks";
+    }
   };
 
   const handleStartTask = async () => {
@@ -258,34 +303,61 @@ export default function TasksPage() {
               className="mb-4"
             />
 
-            {/* STATS GRID */}
+            {/* STATUS FILTER CARDS */}
             <div className="grid grid-cols-3 gap-3">
-              {/* Completed */}
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground mb-1">Completed</p>
-                <p className="font-heading text-xl font-bold text-secondary">
-                  {taskStats.completed}
-                </p>
-              </div>
+              {/* Completed Card */}
+              <button
+                onClick={() => setSelectedStatusFilter("completed")}
+                className={`aspect-square rounded-xl transition-all duration-300 flex flex-col items-center justify-center p-3 cursor-pointer group ${
+                  selectedStatusFilter === "completed"
+                    ? "bg-secondary/20 border-2 border-secondary shadow-lg shadow-secondary/20 scale-105"
+                    : "bg-card border-2 border-border hover:border-secondary/50 hover:shadow-md"
+                }`}
+              >
+                <div className="text-center space-y-1">
+                  <p className="font-heading text-2xl font-bold text-secondary">
+                    {taskStats.completed}
+                  </p>
+                  <p className="text-xs font-medium text-foreground">Completed</p>
+                  <div className={`h-1 rounded-full transition-all ${selectedStatusFilter === "completed" ? "w-8 bg-secondary" : "w-4 bg-border"}`}></div>
+                </div>
+              </button>
 
-              {/* In Progress */}
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground mb-1">Active</p>
-                <p className="font-heading text-xl font-bold text-accent">
-                  {taskStats.inProgress}
-                </p>
-              </div>
+              {/* Active Card */}
+              <button
+                onClick={() => setSelectedStatusFilter("active")}
+                className={`aspect-square rounded-xl transition-all duration-300 flex flex-col items-center justify-center p-3 cursor-pointer group ${
+                  selectedStatusFilter === "active"
+                    ? "bg-accent/20 border-2 border-accent shadow-lg shadow-accent/20 scale-105"
+                    : "bg-card border-2 border-border hover:border-accent/50 hover:shadow-md"
+                }`}
+              >
+                <div className="text-center space-y-1">
+                  <p className="font-heading text-2xl font-bold text-accent">
+                    {taskStats.inProgress}
+                  </p>
+                  <p className="text-xs font-medium text-foreground">Active</p>
+                  <div className={`h-1 rounded-full transition-all ${selectedStatusFilter === "active" ? "w-8 bg-accent" : "w-4 bg-border"}`}></div>
+                </div>
+              </button>
 
-              {/* Available Tasks */}
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground mb-1">Available</p>
-                <p className="font-heading text-xl font-bold text-primary">
-                  {taskStats.available}
-                </p>
-                <p className="text-xs text-muted-foreground/70 mt-0.5">
-                  Tasks you can start right now
-                </p>
-              </div>
+              {/* Available Card */}
+              <button
+                onClick={() => setSelectedStatusFilter("available")}
+                className={`aspect-square rounded-xl transition-all duration-300 flex flex-col items-center justify-center p-3 cursor-pointer group ${
+                  selectedStatusFilter === "available"
+                    ? "bg-primary/20 border-2 border-primary shadow-lg shadow-primary/20 scale-105"
+                    : "bg-card border-2 border-border hover:border-primary/50 hover:shadow-md"
+                }`}
+              >
+                <div className="text-center space-y-1">
+                  <p className="font-heading text-2xl font-bold text-primary">
+                    {taskStats.available}
+                  </p>
+                  <p className="text-xs font-medium text-foreground">Available</p>
+                  <div className={`h-1 rounded-full transition-all ${selectedStatusFilter === "available" ? "w-8 bg-primary" : "w-4 bg-border"}`}></div>
+                </div>
+              </button>
             </div>
 
             {/* MOTIVATIONAL MESSAGE */}
@@ -324,20 +396,44 @@ export default function TasksPage() {
 
         {/* TASK LIST */}
         <div className="space-y-4">
-          {/* Available and In-Progress Tasks */}
+          {/* Status Label */}
+          {selectedStatusFilter !== "all" && (
+            <div className="flex items-center justify-between px-1 py-2 border-b border-border/30">
+              <p className="text-sm font-semibold text-foreground">
+                📋 Showing: {getStatusLabel()}
+              </p>
+              <button
+                onClick={() => setSelectedStatusFilter("all")}
+                className="text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
+                View All
+              </button>
+            </div>
+          )}
+
+          {/* Task List */}
           <div className="space-y-3">
-            {availableTasks.length === 0 && inProgressTasks.length === 0 && completedTasks.length === 0 ? (
+            {displayedTasks.length === 0 ? (
               <div className="glass-card border border-border rounded-lg p-8 text-center">
                 <Award className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
-                <p className="font-medium text-foreground mb-1">No tasks available</p>
+                <p className="font-medium text-foreground mb-1">
+                  {selectedStatusFilter === "completed" && "No completed tasks yet"}
+                  {selectedStatusFilter === "active" && "No active tasks"}
+                  {selectedStatusFilter === "available" && "No available tasks"}
+                  {selectedStatusFilter === "all" && "No tasks available"}
+                </p>
                 <p className="text-sm text-muted-foreground">
-                  {selectedCategory !== "all" 
-                    ? "Try selecting a different category" 
-                    : "Check back soon or explore other categories"}
+                  {selectedStatusFilter !== "all" && selectedCategory !== "all"
+                    ? "Try selecting a different category"
+                    : selectedStatusFilter === "completed"
+                    ? "Complete tasks to earn rewards!"
+                    : selectedStatusFilter === "available"
+                    ? "Check back soon for more tasks"
+                    : "Start an available task to get going!"}
                 </p>
               </div>
             ) : (
-              [...inProgressTasks, ...availableTasks, ...completedTasks].map((userTask, index) => {
+              displayedTasks.map((userTask, index) => {
                 const taskDef = allTasks.find((t) => t.id === userTask.taskId);
                 if (!taskDef) return null;
 
@@ -347,6 +443,19 @@ export default function TasksPage() {
                 const CategoryIcon = catConfig.icon;
 
                 const isCompleted = userTask.status === "completed";
+                const isActive = userTask.status === "in_progress";
+                const isAvailable = userTask.status === "available";
+
+                // Determine verification status for completed tasks (demo purposes)
+                const getCompletionStatus = () => {
+                  if (!isCompleted) return null;
+                  const statusRandom = Math.random();
+                  if (statusRandom < 0.5) return "verified"; // ✅ Verified
+                  if (statusRandom < 0.8) return "pending"; // ⏳ Pending
+                  return "rejected"; // ❌ Rejected
+                };
+
+                const completionStatus = getCompletionStatus();
 
                 return (
                   <Card
@@ -398,8 +507,53 @@ export default function TasksPage() {
                             {taskDef.description}
                           </p>
 
+                          {/* STATUS-SPECIFIC INFO */}
+                          {/* Completed Task - Verification Status */}
+                          {isCompleted && completionStatus && (
+                            <div className={`mb-3 px-3 py-2 rounded-lg text-xs font-medium flex items-center gap-2 ${
+                              completionStatus === "verified"
+                                ? "bg-secondary/20 text-secondary"
+                                : completionStatus === "pending"
+                                ? "bg-accent/20 text-accent"
+                                : "bg-destructive/20 text-destructive"
+                            }`}>
+                              {completionStatus === "verified" && (
+                                <>
+                                  <CheckCircle2 className="h-4 w-4" />
+                                  ✅ Verified by Teacher
+                                </>
+                              )}
+                              {completionStatus === "pending" && (
+                                <>
+                                  <Clock className="h-4 w-4" />
+                                  ⏳ Pending Verification
+                                </>
+                              )}
+                              {completionStatus === "rejected" && (
+                                <>
+                                  <AlertCircle className="h-4 w-4" />
+                                  ❌ Rejected - Please retry
+                                </>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Active Task - Progress */}
+                          {isActive && (
+                            <div className="mb-3 space-y-1">
+                              <div className="flex items-center justify-between text-xs">
+                                <span className="font-medium text-foreground">Progress</span>
+                                <span className="text-muted-foreground">65%</span>
+                              </div>
+                              <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-accent to-accent/80 rounded-full" style={{ width: "65%" }}></div>
+                              </div>
+                              <p className="text-xs text-muted-foreground">In progress...</p>
+                            </div>
+                          )}
+
                           {/* Proof Requirements */}
-                          {taskDef.proofPolicy.type !== "none" && (
+                          {taskDef.proofPolicy.type !== "none" && !isCompleted && (
                             <div className="flex items-center gap-2 mb-3 flex-wrap">
                               {taskDef.proofPolicy.type === "photo" && (
                                 <span className="flex items-center gap-1 text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded">
@@ -419,7 +573,7 @@ export default function TasksPage() {
                             </div>
                           )}
 
-                          {/* Footer: Rewards & Action */}
+                          {/* Footer: Rewards & Status */}
                           <div className="flex items-center justify-between">
                             {/* Rewards */}
                             <div className="flex items-center gap-3">
@@ -436,7 +590,13 @@ export default function TasksPage() {
                             {/* Status Badge */}
                             <Badge
                               variant="outline"
-                              className={`text-xs ${isCompleted ? "bg-secondary/10 text-secondary" : ""}`}
+                              className={`text-xs ${
+                                isCompleted
+                                  ? "bg-secondary/10 text-secondary"
+                                  : isActive
+                                  ? "bg-accent/10 text-accent"
+                                  : "bg-primary/10 text-primary"
+                              }`}
                             >
                               {statusCfg.label}
                             </Badge>
@@ -444,26 +604,39 @@ export default function TasksPage() {
                         </div>
                       </div>
 
-                      {/* CTA Button */}
-                      {!isCompleted && (
+                      {/* CTA Buttons - Status Specific */}
+                      {isAvailable && (
                         <Button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleSelectTask(userTask.id);
                           }}
-                          className="w-full bg-gradient-to-r from-primary to-primary/80 text-sm"
+                          className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-sm font-semibold"
                           size="sm"
                         >
-                          {userTask.status === "in_progress" ? "Continue Task" : "Start Task"}
+                          🚀 Start Task
                           <ChevronRight className="h-4 w-4 ml-1" />
                         </Button>
                       )}
 
-                      {/* Completion Message */}
+                      {isActive && (
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSelectTask(userTask.id);
+                          }}
+                          className="w-full bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-sm font-semibold"
+                          size="sm"
+                        >
+                          ▶️ Continue Task
+                          <ChevronRight className="h-4 w-4 ml-1" />
+                        </Button>
+                      )}
+
                       {isCompleted && (
-                        <div className="flex items-center justify-center gap-2 text-secondary text-sm font-medium py-1">
+                        <div className="flex items-center justify-center gap-2 text-secondary text-sm font-medium py-2 bg-secondary/10 rounded-lg">
                           <CheckCircle2 className="h-4 w-4" />
-                          Task Completed
+                          ✅ Completed
                         </div>
                       )}
                     </div>
@@ -473,8 +646,8 @@ export default function TasksPage() {
             )}
           </div>
 
-          {/* Locked Tasks Section */}
-          {lockedTasks.length > 0 && (
+          {/* Locked Tasks Section - Only show when viewing all tasks */}
+          {lockedTasks.length > 0 && selectedStatusFilter === "all" && (
             <div className="space-y-3">
               <div className="flex items-center gap-2 px-1">
                 <Lock className="h-4 w-4 text-muted-foreground" />

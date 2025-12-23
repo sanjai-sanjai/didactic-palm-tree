@@ -174,7 +174,7 @@ export default function ForceBuilder() {
     ctx.strokeRect(object.x, OBJECT_Y, object.width, object.height);
 
     // Object label
-    ctx.fillStyle = "#FFF";
+    ctx.fillStyle = "#000";
     ctx.font = "bold 12px Arial";
     ctx.textAlign = "center";
     ctx.fillText(
@@ -203,7 +203,7 @@ export default function ForceBuilder() {
       ctx.fill();
 
       // Force label
-      ctx.fillStyle = "#FF0000";
+      ctx.fillStyle = "#000";
       ctx.font = "bold 14px Arial";
       ctx.textAlign = "center";
       ctx.fillText(`Force: ${forceApplied}`, object.x - 30 - arrowLength / 2, OBJECT_Y - 30);
@@ -277,7 +277,7 @@ export default function ForceBuilder() {
     <div
       className={cn(
         "flex flex-col items-center justify-center transition-all duration-300",
-        isFullscreen ? "fixed inset-0 z-50 bg-black p-0" : "w-full bg-gradient-to-br from-blue-50 to-cyan-50 p-4"
+        isFullscreen ? "fixed inset-0 z-50 bg-black p-0" : "w-full bg-background p-4"
       )}
     >
       {/* Fullscreen button */}
@@ -309,7 +309,7 @@ export default function ForceBuilder() {
 
       {/* Canvas */}
       <div className={cn(
-        "rounded-lg border-2 border-gray-300 shadow-lg bg-white overflow-hidden",
+        "rounded-lg border-2 border-border shadow-lg bg-card overflow-hidden",
         isFullscreen ? "w-screen h-screen" : "w-full max-w-4xl"
       )}>
         <canvas
@@ -322,11 +322,11 @@ export default function ForceBuilder() {
 
       {/* Controls */}
       {!isFullscreen && (
-        <div className="mt-6 w-full max-w-4xl bg-white p-6 rounded-lg border border-gray-200">
+        <div className="mt-6 w-full max-w-4xl bg-card p-6 rounded-lg border border-border">
           <div className="space-y-6">
             {/* Object Selection */}
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-gray-700">
+              <label className="text-sm font-semibold text-foreground">
                 Choose an Object
               </label>
               <div className="grid grid-cols-3 gap-3">
@@ -345,7 +345,7 @@ export default function ForceBuilder() {
 
             {/* Force Selection */}
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-gray-700">
+              <label className="text-sm font-semibold text-white">
                 Select a Force (Same for all objects)
               </label>
               <div className="grid grid-cols-3 gap-3">
@@ -355,7 +355,7 @@ export default function ForceBuilder() {
                     onClick={() => applyForce(force)}
                     disabled={isMoving || forceApplied > 0}
                     variant={forceApplied === force ? "default" : "outline"}
-                    className="w-full"
+                    className="w-full text-white"
                   >
                     Force {force}
                   </Button>
@@ -381,7 +381,7 @@ export default function ForceBuilder() {
                 }}
                 variant="outline"
                 size="lg"
-                className={cn("w-full", forceApplied === 0 && "col-span-2")}
+                className={cn("w-full text-white", forceApplied === 0 && "col-span-2")}
               >
                 🔄 Reset
               </Button>
@@ -389,15 +389,15 @@ export default function ForceBuilder() {
 
             {/* Result Display */}
             {showResult && (
-              <div className="p-4 rounded-lg bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300">
+              <div className="p-4 rounded-lg bg-muted border border-border/50">
                 <div className="text-center mb-4">
-                  <div className="text-2xl font-bold text-blue-700 mb-2">
+                  <div className="text-2xl font-bold text-accent mb-2">
                     {lastDistance}px
                   </div>
-                  <div className="text-sm text-gray-700">
+                  <div className="text-sm text-foreground/80">
                     The {object.name.toLowerCase()} traveled {lastDistance}px
                   </div>
-                  <div className="text-xs text-gray-600 mt-2">
+                  <div className="text-xs text-foreground/60 mt-2">
                     Heavier objects moved slower with the same force!
                   </div>
                 </div>
@@ -412,17 +412,17 @@ export default function ForceBuilder() {
 
             {/* Comparison Table */}
             {Object.values(results).some((r) => r > 0) && (
-              <div className="p-4 rounded-lg bg-purple-50 border border-purple-200">
-                <h3 className="font-bold text-gray-800 mb-3">📊 Accelerations Observed</h3>
+              <div className="p-4 rounded-lg bg-muted border border-border/50">
+                <h3 className="font-bold text-foreground mb-3">📊 Accelerations Observed</h3>
                 <div className="space-y-2">
                   {Object.entries(OBJECTS).map(([key, obj]) => (
                     <div key={key} className="flex justify-between items-center">
-                      <span className="text-sm font-medium">{obj.name} (M={obj.mass}):</span>
+                      <span className="text-sm font-medium text-foreground">{obj.name} (M={obj.mass}):</span>
                       <div className="flex items-center gap-3 flex-1 ml-4">
-                        <div className="flex-1 bg-gray-200 rounded-full h-2">
+                        <div className="flex-1 bg-muted-foreground/30 rounded-full h-2">
                           {results[key as keyof typeof OBJECTS] > 0 && (
                             <div
-                              className="bg-blue-500 h-2 rounded-full transition-all"
+                              className="bg-primary h-2 rounded-full transition-all"
                               style={{
                                 width: `${Math.min((results[key as keyof typeof OBJECTS] / 400) * 100, 100)}%`,
                               }}
@@ -442,7 +442,7 @@ export default function ForceBuilder() {
             )}
 
             {/* Stats */}
-            <div className="text-sm text-gray-600 text-center">
+            <div className="text-sm text-white text-center">
               Total Attempts: {attempts}
             </div>
           </div>
@@ -451,23 +451,23 @@ export default function ForceBuilder() {
 
       {/* Embedded Info */}
       {!isFullscreen && (
-        <div className="mt-6 w-full max-w-4xl bg-orange-50 p-6 rounded-lg border border-orange-200">
+        <div className="mt-6 w-full max-w-4xl bg-card p-6 rounded-lg border border-border/50">
           <div className="space-y-4">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">📘 Concept</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">📘 Concept</h3>
+              <p className="text-sm text-foreground/80">
                 Force causes acceleration, not motion itself. The same force creates different accelerations on different masses.
               </p>
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">🕹 How to Play</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">🕹 How to Play</h3>
+              <p className="text-sm text-foreground/80">
                 Select an object, choose a force, apply it, and watch what happens. Try different objects with the same force!
               </p>
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">🧠 What You Learn</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">🧠 What You Learn</h3>
+              <p className="text-sm text-foreground/80">
                 Light objects accelerate faster. Heavy objects resist acceleration. Once the force is removed, motion continues!
               </p>
             </div>

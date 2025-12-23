@@ -444,7 +444,7 @@ export default function EnergyQuest() {
     <div
       className={cn(
         "flex flex-col items-center justify-center transition-all duration-300",
-        isFullscreen ? "fixed inset-0 z-50 bg-black p-0 overflow-hidden" : "w-full bg-gradient-to-br from-blue-50 to-cyan-50 p-4"
+        isFullscreen ? "fixed inset-0 z-50 bg-black p-0 overflow-hidden" : "w-full bg-background p-4"
       )}
     >
       {/* Fullscreen button */}
@@ -476,7 +476,7 @@ export default function EnergyQuest() {
 
       {/* Canvas */}
       <div className={cn(
-        "rounded-lg border-2 border-gray-300 shadow-lg bg-white overflow-hidden",
+        "rounded-lg border-2 border-border shadow-lg bg-card overflow-hidden",
         isFullscreen ? "w-screen h-screen" : "w-full max-w-5xl"
       )}>
         <canvas
@@ -489,11 +489,11 @@ export default function EnergyQuest() {
 
       {/* Controls */}
       {!isFullscreen && (
-        <div className="mt-6 w-full max-w-5xl bg-white p-6 rounded-lg border border-gray-200 shadow-md">
+        <div className="mt-6 w-full max-w-5xl bg-card p-6 rounded-lg border border-border shadow-md">
           <div className="space-y-6">
             {/* Flow Control */}
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-gray-800">
+              <label className="text-sm font-semibold text-black">
                 Control Water Flow
               </label>
               <div className="flex gap-3 items-center">
@@ -524,7 +524,7 @@ export default function EnergyQuest() {
               <Button
                 onClick={releaseWater}
                 disabled={gameState.waterLevel < 5 || gameState.waterMoving}
-                className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold"
+                className="bg-gradient-to-r from-accent to-badge hover:from-accent/90 hover:to-badge/90 text-white font-bold"
                 size="lg"
               >
                 💧 Release Water
@@ -532,7 +532,7 @@ export default function EnergyQuest() {
               <Button
                 onClick={stopWater}
                 variant="outline"
-                className="font-bold"
+                className="font-bold text-black"
                 size="lg"
               >
                 🛑 Stop
@@ -540,33 +540,33 @@ export default function EnergyQuest() {
             </div>
 
             {/* Energy Status */}
-            <div className="grid grid-cols-3 gap-3 p-4 bg-gray-50 rounded-lg">
+            <div className="grid grid-cols-3 gap-3 p-4 bg-muted rounded-lg">
               <div className="text-center">
                 <div className="text-2xl">💧</div>
-                <div className="text-xs text-gray-600">Water</div>
-                <div className="text-lg font-bold text-blue-600">{Math.round(gameState.waterLevel)}%</div>
+                <div className="text-xs text-muted-foreground">Water</div>
+                <div className="text-lg font-bold text-accent">{Math.round(gameState.waterLevel)}%</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl">⚙️</div>
-                <div className="text-xs text-gray-600">Turbine</div>
-                <div className="text-lg font-bold text-red-600">{Math.round(gameState.turbineRotation % 360)}°</div>
+                <div className="text-xs text-muted-foreground">Turbine</div>
+                <div className="text-lg font-bold text-destructive">{Math.round(gameState.turbineRotation % 360)}°</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl">⚡</div>
-                <div className="text-xs text-gray-600">Power</div>
-                <div className="text-lg font-bold text-orange-600">{Math.round(gameState.generatorPower)}kW</div>
+                <div className="text-xs text-muted-foreground">Power</div>
+                <div className="text-lg font-bold text-badge">{Math.round(gameState.generatorPower)}kW</div>
               </div>
             </div>
 
             {/* Progress */}
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="font-semibold text-gray-800">Houses Lit</span>
-                <span className="text-gray-600">{gameState.housesLit}/{WIN_CONDITION}</span>
+                <span className="font-semibold text-foreground">Houses Lit</span>
+                <span className="text-muted-foreground">{gameState.housesLit}/{WIN_CONDITION}</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-muted-foreground/30 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-3 rounded-full transition-all duration-300"
+                  className="bg-secondary h-3 rounded-full transition-all duration-300"
                   style={{ width: `${(gameState.housesLit / WIN_CONDITION) * 100}%` }}
                 />
               </div>
@@ -587,23 +587,23 @@ export default function EnergyQuest() {
 
       {/* Embedded Info */}
       {!isFullscreen && (
-        <div className="mt-6 w-full max-w-5xl bg-yellow-50 p-6 rounded-lg border border-yellow-200">
+        <div className="mt-6 w-full max-w-5xl bg-card p-6 rounded-lg border border-border/50">
           <div className="space-y-4">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">📘 Energy Transformation</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">📘 Energy Transformation</h3>
+              <p className="text-sm text-foreground/80">
                 Water falls (potential energy) → Spins turbine (kinetic energy) → Generator creates electricity → Houses light up!
               </p>
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">🕹 How to Play</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">🕹 How to Play</h3>
+              <p className="text-sm text-foreground/80">
                 Release water to spin the turbine. Watch it power the generator. More flow = more power = more houses lit!
               </p>
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">💡 What You Learn</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">💡 What You Learn</h3>
+              <p className="text-sm text-foreground/80">
                 Energy never disappears—it just changes form. Water energy becomes motion, then electricity!
               </p>
             </div>
