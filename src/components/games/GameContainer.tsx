@@ -1,0 +1,223 @@
+import React, { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Maximize2, Minimize2, RotateCcw, X } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+
+interface GameContainerProps {
+  gameComponent: React.ReactNode;
+  instructions: string;
+  conceptLearned: string;
+  onRetry: () => void;
+  onExit: () => void;
+  gameName: string;
+}
+
+export function GameContainer({
+  gameComponent,
+  instructions,
+  conceptLearned,
+  onRetry,
+  onExit,
+  gameName,
+}: GameContainerProps) {
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleFullscreenClick = async () => {
+    try {
+      const element = containerRef.current?.querySelector("[data-game-canvas]");
+      if (!isFullscreen && element) {
+        if (element.requestFullscreen) {
+          await element.requestFullscreen();
+          setIsFullscreen(true);
+          // Lock scroll
+          document.documentElement.style.overflow = "hidden";
+          document.body.style.overflow = "hidden";
+        }
+      } else if (isFullscreen) {
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        }
+        setIsFullscreen(false);
+        // Unlock scroll
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+      }
+    } catch (error) {
+      console.error("Fullscreen error:", error);
+    }
+  };
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement) {
+        setIsFullscreen(false);
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+      }
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  const handleExitClick = () => {
+    if (isFullscreen) {
+      setShowExitConfirm(true);
+    } else {
+      onExit();
+    }
+  };
+
+  const handleConfirmExit = async () => {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    }
+    setIsFullscreen(false);
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+    onExit();
+  };
+
+  return (
+    <div ref={containerRef} className="w-full">
+      {/* Game Canvas Container */}
+      <div
+        data-game-canvas
+        className="w-full bg-gradient-to-b from-background to-muted/30 rounded-2xl overflow-hidden"
+      >
+        <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
+          {/* Fullscreen Button - Top Right */}
+          <button
+            onClick={handleFullscreenClick}
+            className="absolute top-4 right-4 z-50 h-10 w-10 rounded-lg bg-black/50 hover:bg-black/70 flex items-center justify-center text-white transition-colors"
+            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+          >
+            {isFullscreen ? (
+              <Minimize2 className="h-5 w-5" />
+            ) : (
+              <Maximize2 className="h-5 w-5" />
+            )}
+          </button>
+
+          {/* Game Component */}
+          <div className="w-full h-full flex items-center justify-center overflow-hidden">
+            {gameComponent}
+          </div>
+
+          {/* Fullscreen Controls */}
+          {isFullscreen && (
+            <div className="absolute bottom-4 left-4 right-4 z-50 flex gap-2 justify-center flex-wrap">
+              <Button
+                onClick={onRetry}
+                size="sm"
+                className="bg-primary hover:bg-primary/90"
+              >
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Retry
+              </Button>
+              <Button
+                onClick={handleExitClick}
+                size="sm"
+                className="bg-destructive hover:bg-destructive/90"
+              >
+                <X className="h-4 w-4 mr-2" />
+                Exit
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Instructions & Learning Section */}
+      {!isFullscreen && (
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Instructions */}
+          <Card className="glass-card border border-border/50 p-4">
+            <h3 className="font-heading font-semibold text-foreground mb-2 flex items-center gap-2">
+              <span className="text-lg">📘</span>
+              Instructions
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{instructions}</p>
+          </Card>
+
+          {/* Concept Learned */}
+          <Card className="glass-card border border-border/50 p-4">
+            <h3 className="font-heading font-semibold text-foreground mb-2 flex items-center gap-2">
+              <span className="text-lg">🧠</span>
+              Concept Learned
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{conceptLearned}</p>
+          </Card>
+        </div>
+      )}
+
+      {/* Game Controls */}
+      {!isFullscreen && (
+        <div className="mt-6 flex gap-3 flex-wrap">
+          <Button
+            onClick={onRetry}
+            variant="outline"
+            className="flex-1 sm:flex-none"
+          >
+            <RotateCcw className="h-4 w-4 mr-2" />
+            Retry
+          </Button>
+          <Button
+            onClick={handleExitClick}
+            variant="outline"
+            className="flex-1 sm:flex-none"
+          >
+            <X className="h-4 w-4 mr-2" />
+            Exit Game
+          </Button>
+        </div>
+      )}
+
+      {/* Exit Confirmation Dialog */}
+      <Dialog open={showExitConfirm} onOpenChange={setShowExitConfirm}>
+        <DialogContent>
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-heading text-lg font-semibold">Exit Game?</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Your progress will be saved. Are you sure you want to exit?
+              </p>
+            </div>
+            <div className="flex gap-3 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => setShowExitConfirm(false)}
+                className="flex-1"
+              >
+                Keep Playing
+              </Button>
+              <Button
+                onClick={handleConfirmExit}
+                className="flex-1 bg-destructive hover:bg-destructive/90"
+              >
+                Exit
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
