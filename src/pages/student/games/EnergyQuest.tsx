@@ -587,11 +587,11 @@ export default function EnergyQuest() {
 
       {/* Embedded Info */}
       {!isFullscreen && (
-        <div className="mt-6 w-full max-w-5xl bg-yellow-50 p-6 rounded-lg border border-yellow-200">
+        <div className="mt-6 w-full max-w-5xl bg-card p-6 rounded-lg border border-border/50">
           <div className="space-y-4">
             <div>
-              <h3 className="font-bold text-gray-800 mb-2">📘 Energy Transformation</h3>
-              <p className="text-sm text-gray-700">
+              <h3 className="font-bold text-foreground mb-2">📘 Energy Transformation</h3>
+              <p className="text-sm text-foreground/80">
                 Water falls (potential energy) → Spins turbine (kinetic energy) → Generator creates electricity → Houses light up!
               </p>
             </div>
