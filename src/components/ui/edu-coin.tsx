@@ -23,11 +23,14 @@ const sizeMap = {
  * Transparent PNG - blends with app theme
  * Scalable and consistent across the application
  */
+const DEFAULT_COIN_SRC = "https://cdn.builder.io/api/v1/image/assets%2Fa9d627de7a0c400a9a5045a9ca4a12ea%2F6df1eb74c5aa43698eea5229a2df81d4";
+
 export function EduCoin({
   size = "md",
   animated = false,
   className,
   imgClassName,
+  src = DEFAULT_COIN_SRC,
   showLabel = false,
 }: EduCoinProps) {
   const dimension = sizeMap[size];
@@ -45,7 +48,7 @@ export function EduCoin({
       `}</style>
 
       <img
-        src="https://cdn.builder.io/api/v1/image/assets%2Fa9d627de7a0c400a9a5045a9ca4a12ea%2F6df1eb74c5aa43698eea5229a2df81d4"
+        src={src}
         alt="EduCoin"
         width={dimension}
         height={dimension}
