@@ -298,7 +298,7 @@ export default function RewardsPage() {
 
                 {/* Spent Card */}
                 <div
-                  className="flex-1 glass-card rounded-xl border border-border/50"
+                  className="spent-card flex-1 glass-card rounded-xl border border-border/50"
                   style={{
                     padding: "16px",
                   }}
