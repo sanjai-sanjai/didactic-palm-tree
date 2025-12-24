@@ -6,6 +6,7 @@ interface EduCoinProps {
   animated?: boolean;
   className?: string;
   imgClassName?: string;
+  src?: string;
   showLabel?: boolean;
 }
 
