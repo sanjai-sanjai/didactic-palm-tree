@@ -31,14 +31,28 @@ interface SettingItem {
 export default function SettingsPage() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const { soundEnabled, setSoundEnabled } = useSoundEffects();
   const { isOnline } = usePWA();
 
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(true);
   const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false);
   const [syncStatus, setSyncStatus] = useState<"synced" | "syncing" | "error">(
     "synced"
   );
+
+  // Load settings from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("sound_enabled");
+    if (saved !== null) {
+      setSoundEnabled(JSON.parse(saved));
+    }
+  }, []);
+
+  // Save sound setting to localStorage
+  const handleSoundToggle = (enabled: boolean) => {
+    setSoundEnabled(enabled);
+    localStorage.setItem("sound_enabled", JSON.stringify(enabled));
+  };
 
   const handleLanguageClick = () => {
     setIsLanguageSelectorOpen(true);
