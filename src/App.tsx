@@ -358,17 +358,17 @@ const App = () => (
                 {/* Entrepreneurship Games */}
                 <Route path="/student/entrepreneurship/idea-to-income" element={
                   <ProtectedRoute allowedRoles={["student"]}>
-                    <IdeaToIncome onComplete={(score) => console.log("Game complete:", score)} />
+                    <IdeaToIncomePage />
                   </ProtectedRoute>
                 } />
                 <Route path="/student/entrepreneurship/startup-survival" element={
                   <ProtectedRoute allowedRoles={["student"]}>
-                    <StartupSurvival onComplete={(score) => console.log("Game complete:", score)} />
+                    <StartupSurvivalPage />
                   </ProtectedRoute>
                 } />
                 <Route path="/student/entrepreneurship/customer-first" element={
                   <ProtectedRoute allowedRoles={["student"]}>
-                    <CustomerFirst onComplete={(score) => console.log("Game complete:", score)} />
+                    <CustomerFirstPage />
                   </ProtectedRoute>
                 } />
 
