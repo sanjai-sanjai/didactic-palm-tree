@@ -34,8 +34,17 @@ export function LanguageSelector({ isOpen, onClose }: LanguageSelectorProps) {
   );
 
   const handleLanguageSelect = (languageCode: string) => {
+    const selectedLanguage = languages.find(lang => lang.code === languageCode);
     i18n.changeLanguage(languageCode);
     localStorage.setItem('app_language', languageCode);
+
+    // Show toast notification
+    if (selectedLanguage) {
+      toast.success(`Language changed to ${selectedLanguage.name}`, {
+        duration: 3000,
+      });
+    }
+
     onClose();
   };
 
