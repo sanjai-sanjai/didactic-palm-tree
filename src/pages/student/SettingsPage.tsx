@@ -106,8 +106,8 @@ export default function SettingsPage() {
       description: "Enable audio feedback during games and interactions",
       action: (
         <Toggle
-          pressed={soundEnabled || false}
-          onPressedChange={setSoundEnabled}
+          pressed={soundEnabled}
+          onPressedChange={handleSoundToggle}
           className="bg-accent/10 hover:bg-accent/20"
         >
           {soundEnabled ? "On" : "Off"}
