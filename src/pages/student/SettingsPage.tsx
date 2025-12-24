@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AppLayout } from "@/components/navigation/AppLayout";
@@ -18,7 +18,6 @@ import {
   WifiOff,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useSoundEffects } from "@/hooks/use-sound-effects";
 import { usePWA } from "@/hooks/use-pwa";
 
 interface SettingItem {
